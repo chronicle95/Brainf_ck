@@ -1,0 +1,159 @@
+brainfuck extension
+general purpose macro language compiled to bf
+pass through `bfx-str` otherwise wont work
+
+written by chronicle95 in 2019
+
+instructions:
+
+0 XXX III         set X to I
+1 XXX YYY         add Y to X with copy
+2 XXX YYY         subtract Y from X with copy
+3 XXX             reference X
+4 XXX             unreference X
+5 XXX             loop over X
+6 XXX             end of loop over X
+7 XXX             read char into X
+8 XXX             put char from X
+#                 line comment
+
+X Y I are digits 0 to 9
+XXX/YYY is a three digit number denoting a cell number
+III is an immediate value number
+space in between the opcode and argumemts is intended
+and must exist although can be any character really
+
+,[ main loop
+
+> "#" [-<->]     subtract char `#` from input
+
+a typical switch case here
+
++<             set up a flag
+[              if not # then
+-------------  subtract 13 to reach char `0`
+[              if not 0 then
+-              subtract 1 to get 1
+[              if not 1 then
+-              subtract 1 to get 2
+[              if not 2 then
+-              subtract 1 to get 3
+[              if not 3 then
+-              subtract 1 to get 4
+[              if not 4 then
+-              subtract 1 to get 5
+[              if not 5 then
+-              subtract 1 to get 6
+[              if not 6 then
+-              subtract 1 to get 7
+[              if not 7 then
+-              subtract 1 to get 8
+[              if not 8 then
+>-<            reset flag
+"8".[-]]       and print the freaking char
+
+>[-<           flag is set so it was 8 (put)
+  ,                    ignore space
+  ,>,>,                read three digits
+  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
+                       so it is easy to get the value
+  [->++++++++++<]      multiply tens by 10
+                       at the same time add to ones
+  <[->++++++++++       multiply hunderds by 100
+  [->++++++++++<]<]    add to ones
+  >>[-<+<+>>]          duplicate the number
+  ">"<[->..<]>[-]<      print move character
+  ".".[-]              print put character
+  "<"<[->..<]>[-]<      print back character
+>]<]
+
+>[-<           flag is set so it was 7 (get)
+  ,                    ignore space
+  ,>,>,                read three digits
+  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
+                       so it is easy to get the value
+  [->++++++++++<]      multiply tens by 10
+                       at the same time add to ones
+  <[->++++++++++       multiply hunderds by 100
+  [->++++++++++<]<]    add to ones
+  >>[-<+<+>>]          duplicate the number
+  ">"<[->..<]>[-]<      print move character
+  ",".[-]              print put character
+  "<"<[->..<]>[-]<      print back character
+>]<]
+
+>[-<           flag is set so it was 6 (end loop)
+  ,                    ignore space
+  ,>,>,                read three digits
+  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
+                       so it is easy to get the value
+  [->++++++++++<]      multiply tens by 10
+                       at the same time add to ones
+  <[->++++++++++       multiply hunderds by 100
+  [->++++++++++<]<]    add to ones
+  >>[-<+<+>>]          duplicate the number
+  ">"<[->..<]>[-]<      print move character
+  "]".[-]              print put character
+  "<"<[->..<]>[-]<      print back character
+>]<]
+
+>[-<           flag is set so it was 5 (loop)
+  ,                    ignore space
+  ,>,>,                read three digits
+  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
+                       so it is easy to get the value
+  [->++++++++++<]      multiply tens by 10
+                       at the same time add to ones
+  <[->++++++++++       multiply hunderds by 100
+  [->++++++++++<]<]    add to ones
+  >>[-<+<+>>]          duplicate the number
+  ">"<[->..<]>[-]<      print move character
+  "[".[-]              print put character
+  "<"<[->..<]>[-]<      print back character
+>]<]
+
+>[-<           flag is set so it was 4 (unref)
+  ,                    ignore space
+  ,>,>,                read three digits
+  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
+                       so it is easy to get the value
+  [->++++++++++<]      multiply tens by 10
+                       at the same time add to ones
+  <[->++++++++++       multiply hunderds by 100
+  [->++++++++++<]<]    add to ones
+  >>>"<"<[->..<]>[-]<<< print move characters
+>]<]
+
+>[-<           flag is set so it was 3 (ref)
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<    subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply tens by 10
+                        at the same time add to ones
+  <[->++++++++++        multiply hunderds by 100
+  [->++++++++++<]<]     add to ones
+  >>>">"<[->..<]>[-]<<< print move characters
+>]<]
+
+>[-<           flag is set so it was 2 (sub)
+               do stuff
+>]<]
+
+>[-<           flag is set so it was 1 (add)
+               do stuff
+>]<]
+
+>[-<           flag is set so it was 0 (set)
+               do stuff
+>]<]
+
+>[-<           flag is set so it was # (line comment)
+  ,----------[ ignore the rest of the line
+  ,----------]
+>]
+
+<              go back char cell 
+,] main loop end
+terminate at EOF (null)
+
