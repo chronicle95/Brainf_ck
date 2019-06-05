@@ -10,9 +10,7 @@ memory model: Ch Cp fZ fN
 
 ,
 
->+++[-<----------->]<  exclamation mark code 33 is terminator
-[                      loop while terminator not met
->+++[-<+++++++++++>]<
+[                      loop while EOF not met
 
 READ quote
 [->+>+<<]>>[-<<+>>]    copy char
@@ -73,5 +71,4 @@ READ quote
 <<<                    return back to char
 
 ,
->+++[-<----------->]<
 ]                      endloop
