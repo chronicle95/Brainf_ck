@@ -4,8 +4,8 @@ filters out any non-bf crap
 
 memory map
 
-ch flg 
-== === 
+ch ch_copy tmp flg
+== ======= === ===
 
 written by chronicle95 in 2019
 
