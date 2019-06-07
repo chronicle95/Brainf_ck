@@ -212,7 +212,39 @@ a typical switch case here
 >]<]
 
 >[-<           flag is set so it was 0 (set)
-               do stuff
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<    subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply tens by 10
+                        at the same time add to ones
+  <[->++++++++++        multiply hunderds by 100
+  [->++++++++++<]<]     add to ones
+  >>[-<+<+>>]           duplicate the number
+
+  >                     go for next number
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<<   subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply hundreds by 10
+                        at the same time add to tens
+
+  >>>"><+-[]"           pregenerate the chars
+
+  <<<<<[->>>>>..<<<<<]  ( go to the cell
+  >>>>> >>>>.<.>>.<<<<< ( clear its value
+  <[->>>.<<<]           ( increment cell with ones
+  >.<                   ( go to nearest temp cell
+  <[->> >>.<< <<]       ( set up multiplier
+  >> >>>>.<.<<.>.....   ( multiply by 10 and add to the
+  .....<<.>>>>>.<<<<.   ( cell
+
+  <<<<<<< [->>>>>>>..   ( return back to the origin
+  <<<<<<<] >>>>>>
+
+  [>]<[[-]<]<<<<<       clear pregen chars array and return
+                        to the flag
 >]<]
 
 >[-<           flag is set so it was # (line comment)
