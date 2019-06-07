@@ -1,4 +1,5 @@
 brainfuck extension
+
 general purpose macro language compiled to bf
 pass through `bfx-str` otherwise wont work
 
@@ -62,9 +63,9 @@ a typical switch case here
   <[->++++++++++       multiply hunderds by 100
   [->++++++++++<]<]    add to ones
   >>[-<+<+>>]          duplicate the number
-  ">"<[->..<]>[-]<      print move character
+  ">"<[->..<]>[-]<     print move character
   ".".[-]              print put character
-  "<"<[->..<]>[-]<      print back character
+  "<"<[->..<]>[-]<     print back character
 >]<]
 
 >[-<           flag is set so it was 7 (get)
@@ -77,9 +78,9 @@ a typical switch case here
   <[->++++++++++       multiply hunderds by 100
   [->++++++++++<]<]    add to ones
   >>[-<+<+>>]          duplicate the number
-  ">"<[->..<]>[-]<      print move character
+  ">"<[->..<]>[-]<     print move character
   ",".[-]              print put character
-  "<"<[->..<]>[-]<      print back character
+  "<"<[->..<]>[-]<     print back character
 >]<]
 
 >[-<           flag is set so it was 6 (end loop)
@@ -92,9 +93,9 @@ a typical switch case here
   <[->++++++++++       multiply hunderds by 100
   [->++++++++++<]<]    add to ones
   >>[-<+<+>>]          duplicate the number
-  ">"<[->..<]>[-]<      print move character
+  ">"<[->..<]>[-]<     print move character
   "]".[-]              print put character
-  "<"<[->..<]>[-]<      print back character
+  "<"<[->..<]>[-]<     print back character
 >]<]
 
 >[-<           flag is set so it was 5 (loop)
@@ -107,20 +108,20 @@ a typical switch case here
   <[->++++++++++       multiply hunderds by 100
   [->++++++++++<]<]    add to ones
   >>[-<+<+>>]          duplicate the number
-  ">"<[->..<]>[-]<      print move character
+  ">"<[->..<]>[-]<     print move character
   "[".[-]              print put character
-  "<"<[->..<]>[-]<      print back character
+  "<"<[->..<]>[-]<     print back character
 >]<]
 
 >[-<           flag is set so it was 4 (unref)
-  ,                    ignore space
-  ,>,>,                read three digits
-  >"0"[-<-<-<->>>]<<   subtract `0` from each digit
-                       so it is easy to get the value
-  [->++++++++++<]      multiply tens by 10
-                       at the same time add to ones
-  <[->++++++++++       multiply hunderds by 100
-  [->++++++++++<]<]    add to ones
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<    subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply tens by 10
+                        at the same time add to ones
+  <[->++++++++++        multiply hunderds by 100
+  [->++++++++++<]<]     add to ones
   >>>"<"<[->..<]>[-]<<< print move characters
 >]<]
 
@@ -137,7 +138,40 @@ a typical switch case here
 >]<]
 
 >[-<           flag is set so it was 2 (sub)
-               do stuff
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<    subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply tens by 10
+                        at the same time add to ones
+  <[->++++++++++        multiply hunderds by 100
+  [->++++++++++<]<]     add to ones
+  >>>>>                 go for next number
+  ,                     ignore space
+  ,>,>,                 read three digits
+  >"0"[-<-<-<->>>]<<    subtract `0` from each digit
+                        so it is easy to get the value
+  [->++++++++++<]       multiply tens by 10
+                        at the same time add to ones
+  <[->++++++++++        multiply hunderds by 100
+  [->++++++++++<]<]     add to ones
+  <<<[-<+<+>>]          duplicate first number
+  >>>>>[-<+<+<+<+>>>>]  quadruplicate second number
+
+  "><-+[]"              pregenerate the chars
+
+  <[->..<]              ( go to second number
+  >>>>>.<<.<.>>.<<<.    ( start of Copy loop
+  <<[->>>..<<<]         ( go back to the origin
+  <<<<[->>>>>>..<<<<<<] ( go to the first number
+  >>>>>>>>.             ( decrement it
+  <<<<<<<<<[->>>>>>>>.. ( go back to the origin
+  <<<<<<<<]
+  >>>>[->>>..<<<]       ( go to second number
+  >>>>>>>>.<<<<.>>>.<<. ( end of Copy loop
+  <<.>>>.<<.>>>>.<<<<<.
+  <<<<[->>>>>..<<<<<]   ( go back to the origin
+  >>>>[>]<[[-]<]<<<<<<  ( clear pregenerated chars
 >]<]
 
 >[-<           flag is set so it was 1 (add)
