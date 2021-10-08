@@ -5,6 +5,25 @@ if [ "$#" -ne 1 ]; then
 	exit 1
 fi
 
+echo Checking interpreter compliance
+echo -- cell value rollover...
+echo "[-]-+>++++++++++++++++[-<++++++++++++++++>]++++++++[-<++++++>]<." > tmp
+COMPL_OUT=$($1 tmp)
+if [ "$COMPL_OUT" != "0" ]; then
+	echo failed.
+	rm tmp
+	exit 1
+fi
+echo -- input and EOF character...
+echo 5 > tmp2
+echo "[-],>,>,>++++++++[-<++++++<++++++>>]<<<.>.>." > tmp
+COMPL_OUT=$(cat tmp2 | $1 tmp)
+if [ "$COMPL_OUT" != "5:0" ]; then
+	echo failed.
+	rm tmp tmp2
+	exit 1
+fi
+
 echo Making bfx-ml
 echo -- patching with bfx-str...
 cat bfx-ml.bpp | $1 bfx-str.b > tmp
