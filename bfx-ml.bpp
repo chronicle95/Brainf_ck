@@ -235,12 +235,14 @@ a typical switch case here
   <<<<<[->>>>>..<<<<<]  ( go to the cell
   >>>>> >>>>.<.>>.<<<<< ( clear its value
   <[->>>.<<<]           ( increment cell with ones
-  >.<                   ( go to nearest temp cell
-  <[->> >>.<< <<]       ( set up multiplier
+  <[                    ( only scale when there is multiplier available
+  >> . <<               ( go to nearest temp cell
+  [->> >>.<< <<]        ( set up multiplier
   >> >>>>.<.<<.>.....   ( multiply by 10 and add to the
-  .....<<.>>>>>.<<<<.   ( cell
+  .....<<.>>>>>.<<<<.<< ( cell
+  <]                    ( end of scaling condition
 
-  <<<<<<< [->>>>>>>..   ( return back to the origin
+  <<<< [->>>>>>>..      ( return back to the origin
   <<<<<<<] >>>>>>
 
   [>]<[[-]<]<<<<<       clear pregen chars array and return
